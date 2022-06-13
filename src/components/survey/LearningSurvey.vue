@@ -77,7 +77,7 @@ export default {
       // });
       this.error = null;
       fetch(
-        'https://vue-http-demo-d8f97-default-rtdb.europe-west1.firebasedatabase.app/surveys',
+        'https://vue-http-demo-d8f97-default-rtdb.europe-west1.firebasedatabase.app/surveys.json',
         {
           method: 'POST',
           headers: {
@@ -88,10 +88,19 @@ export default {
             rating: this.chosenRating,
           }),
         }
-      ).catch((error) => {
-        console.log(error);
-        this.error = 'Some thing went wrong - try again later!';
-      });
+      )
+        .then((response) => {
+          if (response.ok) {
+            ////
+          } else {
+            throw new Error('Could not save data!');
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          // below error.message get message whitch we wrote above with throw
+          this.error = error.message;
+        });
 
       this.enteredName = '';
       this.chosenRating = null;
